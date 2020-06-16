@@ -21,9 +21,12 @@
 
         </activity>
         <activity android:name=".activity.CadastroActivity" />
-        <activity android:name=".activity.MainActivity">
+        <activity android:name=".activity.MainActivity"/>
+        <activity android:name=".activity.ConfigActivity"
 
-        </activity>
+            android:parentActivityName=".activity.MainActivity"
+
+            />
     </application>
 
 </manifest>

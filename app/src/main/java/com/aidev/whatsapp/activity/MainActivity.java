@@ -72,10 +72,21 @@ public class MainActivity extends AppCompatActivity {
                 deslogarUsuario();
                 break;
 
+            case R.id.menu_configurações:
+                abrirConfiguracoes();
+                break;
+
         }
 
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void abrirConfiguracoes() {
+
+        Intent intent = new Intent(this,ConfigActivity.class);
+        startActivity(intent);
+
     }
 
     private void deslogarUsuario() {

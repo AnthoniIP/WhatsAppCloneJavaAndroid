@@ -13,4 +13,6 @@
     <string name="sair">Sair</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="informe">Esse não é seu nome de usuário nem senha. Este nome ficará visivel para seus contatos do whatsapp.</string>
+    <string name="sua_foto">Sua foto</string>
 </resources>
