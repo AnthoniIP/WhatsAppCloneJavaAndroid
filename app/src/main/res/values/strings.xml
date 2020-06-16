@@ -8,4 +8,9 @@
     <string name="novo_usu_rio">novo usuário</string>
     <string name="digite_o_seu_nome">Digite o seu nome</string>
     <string name="cadastrar">Cadastrar</string>
+    <string name="pesquisar">Pesquisar</string>
+    <string name="configura_es">Configurações</string>
+    <string name="sair">Sair</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
