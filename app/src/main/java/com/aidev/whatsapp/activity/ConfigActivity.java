@@ -2,64 +2,109 @@ package com.aidev.whatsapp.activity;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
-import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
-
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.aidev.whatsapp.R;
 import com.aidev.whatsapp.helper.Permissao;
+import de.hdodenhof.circleimageview.CircleImageView;
+import android.widget.ImageView;
 
 
-/*
+public class ConfigActivity extends AppCompatActivity {
 
-created by Anthoni Ipiranga
-
-*/   public class ConfigActivity extends AppCompatActivity {
-
-    private ImageView perfil;
-    private String[] permisoesNecessarias = new String[]{
-
+    private String[] permissoesNecessarias = new String[]{
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.CAMERA
-
     };
-
-    Toolbar toolbar;
+    private ImageView imageButtonCamera, imageButtonGaleria;
+    private static final int SELECAO_CAMERA  = 100;
+    private static final int SELECAO_GALERIA = 200;
+    private CircleImageView circleImageViewPerfil;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_config);
 
-        //Validar permissoes
-        Permissao.validarPermissoes(permisoesNecessarias, this, 1);
+        //Validar permissões
+        Permissao.validarPermissoes(permissoesNecessarias, this, 1);
 
-        toolbar = findViewById(R.id.toolbarPrincipal);
+        imageButtonCamera  = findViewById(R.id.imageViewCamera);
+        imageButtonGaleria = findViewById(R.id.imageViewGaleria);
+        circleImageViewPerfil = findViewById(R.id.circleImageView_fotoPerfil);
+
+        Toolbar toolbar = findViewById(R.id.toolbarPrincipal);
         toolbar.setTitle("Configurações");
-        setSupportActionBar(toolbar);
+        setSupportActionBar( toolbar );
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        perfil = findViewById(R.id.circleImageView_fotoPerfil);
-
-        perfil.setOnClickListener(new View.OnClickListener() {
+        imageButtonCamera.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Toast.makeText(ConfigActivity.this, "clicado na imagem", Toast.LENGTH_SHORT).show();
+            public void onClick(View v) {
+
+                Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                if ( i.resolveActivity(getPackageManager()) != null ){
+                    startActivityForResult(i, SELECAO_CAMERA );
+                }
+
+
             }
         });
+
+        imageButtonGaleria.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI );
+                if ( i.resolveActivity(getPackageManager()) != null ){
+                    startActivityForResult(i, SELECAO_GALERIA );
+                }
+            }
+        });
+
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if ( resultCode == RESULT_OK ){
+            Bitmap imagem = null;
+
+            try {
+
+                switch ( requestCode ){
+                    case SELECAO_CAMERA:
+                        imagem = (Bitmap) data.getExtras().get("data");
+                        break;
+                    case SELECAO_GALERIA:
+                        Uri localImagemSelecionada = data.getData();
+                        imagem = MediaStore.Images.Media.getBitmap(getContentResolver(), localImagemSelecionada );
+                        break;
+                }
+
+                if ( imagem != null ){
+
+                    circleImageViewPerfil.setImageBitmap( imagem );
+
+                }
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+        }
 
     }
 
@@ -67,28 +112,23 @@ created by Anthoni Ipiranga
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        for (int permissaoResultado : grantResults) {
-
-            if (permissaoResultado == PackageManager.PERMISSION_DENIED) {
-
-                alertaValidacao();
-
-
+        for ( int permissaoResultado : grantResults ){
+            if ( permissaoResultado == PackageManager.PERMISSION_DENIED ){
+                alertaValidacaoPermissao();
             }
-
         }
 
     }
 
-    private void alertaValidacao() {
+    private void alertaValidacaoPermissao(){
 
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Permissoes negadas");
-        builder.setMessage("Para utilizar o app e necessario aceitar as permissoes");
+        AlertDialog.Builder builder = new AlertDialog.Builder( this );
+        builder.setTitle("Permissões Negadas");
+        builder.setMessage("Para utilizar o app é necessário aceitar as permissões");
+        builder.setCancelable(false);
         builder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
+            public void onClick(DialogInterface dialog, int which) {
                 finish();
             }
         });
@@ -97,4 +137,5 @@ created by Anthoni Ipiranga
         dialog.show();
 
     }
+
 }

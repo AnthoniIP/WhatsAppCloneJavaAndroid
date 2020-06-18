@@ -18,8 +18,8 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/circleImageView_fotoPerfil"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="230dp"
+        android:layout_height="230dp"
         android:background="@color/common_google_signin_btn_text_dark_default"
         android:src="@drawable/padrao"
         app:civ_border_color="@android:color/white"
@@ -85,6 +85,26 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nome_layout" />
+
+    <ImageView
+        android:id="@+id/imageViewCamera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="131dp"
+        android:layout_marginLeft="131dp"
+        app:layout_constraintBottom_toTopOf="@+id/nome_layout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_baseline_photo_camera_24" />
+
+    <ImageView
+        android:id="@+id/imageViewGaleria"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="130dp"
+        android:layout_marginRight="130dp"
+        app:layout_constraintBottom_toTopOf="@+id/nome_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_baseline_photo_library_24" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
