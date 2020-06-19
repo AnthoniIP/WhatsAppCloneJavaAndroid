@@ -3,7 +3,7 @@ Projeto para replicar a interface e funcionalidades do aplicativo whatsapp, proj
 
 Usada linguagem java para desenvolvimento do app.
 
-Usado firebaseAuth para autenticação de usuários.
+Usado firebaseAuth para autenticação de usuários, firebase database para armazenar dados da conta e firebase storage para hospedar a imagem de perfil do usuário.
 
 Projeto parte do curso https://www.udemy.com/course/curso-de-desenvolvimento-android-oreo/ ministrado pelo Jailson Damasceno.
 
