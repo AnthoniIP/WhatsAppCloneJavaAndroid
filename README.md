@@ -18,3 +18,7 @@ Projeto parte do curso https://www.udemy.com/course/curso-de-desenvolvimento-and
 ## Tela de configuração da conta
 
 ![alt text](https://github.com/AnthoniIP/WhatsAppCloneJavaAndroid/blob/master/screenshots/device-2020-06-18-225916.png?raw=true)
+
+## Tela de Contatos
+
+![alt text](https://github.com/AnthoniIP/WhatsAppCloneJavaAndroid/blob/master/screenshots/device-2020-06-20-174122.png?raw=true)
