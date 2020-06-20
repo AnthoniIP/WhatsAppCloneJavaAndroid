@@ -62,7 +62,7 @@
             android:text="Nome do usuário" />
 
         <ImageView
-            android:id="@+id/imageView3"
+            android:id="@+id/imageViewEditNome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"

@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -22,6 +23,7 @@ import com.aidev.whatsapp.R;
 import com.aidev.whatsapp.config.ConfiguracaoFirebase;
 import com.aidev.whatsapp.helper.Permissao;
 import com.aidev.whatsapp.helper.UsuarioFirebase;
+import com.aidev.whatsapp.model.Usuario;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -49,6 +51,9 @@ public class ConfigActivity extends AppCompatActivity {
     private CircleImageView circleImageViewPerfil;
     private StorageReference storageImage;
     private String identificadorUsuario;
+    private EditText nomePerfilConfig;
+    private ImageView imageViewEditNome;
+    private Usuario usuarioLogado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +63,7 @@ public class ConfigActivity extends AppCompatActivity {
         //configuraçoes iniciais
         storageImage = ConfiguracaoFirebase.getFirebaseStorage();
         identificadorUsuario = UsuarioFirebase.getIdentificadorUsuario();
+        usuarioLogado = UsuarioFirebase.getDadosUsuarioLogado();
 
         //Validar permissões
         Permissao.validarPermissoes(permissoesNecessarias, this, 1);
@@ -66,6 +72,8 @@ public class ConfigActivity extends AppCompatActivity {
         imageButtonCamera = findViewById(R.id.imageViewCamera);
         imageButtonGaleria = findViewById(R.id.imageViewGaleria);
         circleImageViewPerfil = findViewById(R.id.circleImageView_fotoPerfil);
+        nomePerfilConfig = findViewById(R.id.editTextTextPersonName);
+        imageViewEditNome = findViewById(R.id.imageViewEditNome);
 
         Toolbar toolbar = findViewById(R.id.toolbarPrincipal);
         toolbar.setTitle("Configurações");
@@ -74,7 +82,7 @@ public class ConfigActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //recuperar informaçoes do usuario
-        FirebaseUser usuario = UsuarioFirebase.getUsuarioAtual();
+        final FirebaseUser usuario = UsuarioFirebase.getUsuarioAtual();
         Uri url = usuario.getPhotoUrl();
 
         if (url != null) {
@@ -89,6 +97,8 @@ public class ConfigActivity extends AppCompatActivity {
             circleImageViewPerfil.setImageResource(R.drawable.padrao);
 
         }
+
+        nomePerfilConfig.setText(usuario.getDisplayName());
 
         imageButtonCamera.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,6 +121,31 @@ public class ConfigActivity extends AppCompatActivity {
                 if (i.resolveActivity(getPackageManager()) != null) {
                     startActivityForResult(i, SELECAO_GALERIA);
                 }
+            }
+        });
+
+        imageViewEditNome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String nomeDigitado = nomePerfilConfig.getText().toString();
+
+                boolean retorno = UsuarioFirebase.atualizarNomeUsuario(nomeDigitado);
+
+                if (retorno) {
+
+                    usuarioLogado.setNome(nomeDigitado);
+                    usuarioLogado.atualizar();
+
+
+                    Toast.makeText(getApplicationContext(), "Nome atualizado com sucesso", Toast.LENGTH_SHORT).show();
+                } else {
+
+                    Toast.makeText(getApplicationContext(), "Falha ao atualizar nome", Toast.LENGTH_SHORT).show();
+
+                }
+
+
             }
         });
 
@@ -214,6 +249,8 @@ public class ConfigActivity extends AppCompatActivity {
     private void atualizarFoto(Uri url) {
 
         UsuarioFirebase.atualizarFotoUsuario(url);
+        usuarioLogado.setFoto(url.toString());
+        usuarioLogado.atualizar();
 
 
     }

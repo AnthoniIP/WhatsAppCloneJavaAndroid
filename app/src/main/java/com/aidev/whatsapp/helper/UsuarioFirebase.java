@@ -6,6 +6,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.aidev.whatsapp.config.ConfiguracaoFirebase;
+import com.aidev.whatsapp.model.Usuario;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -43,7 +44,7 @@ public class UsuarioFirebase {
             user.updateProfile(profile).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
-                    if (task.isSuccessful()) {
+                    if (!task.isSuccessful()) {
                         Log.d("Perfil", "erro ao recuperar imagem de peril");
                     }
                 }
@@ -59,4 +60,55 @@ public class UsuarioFirebase {
 
 
     }
+
+    public static boolean atualizarNomeUsuario(String nome) {
+
+        try {
+
+            FirebaseUser user = getUsuarioAtual();
+
+            UserProfileChangeRequest profile = new UserProfileChangeRequest.Builder()
+                    .setDisplayName(nome)
+                    .build();
+
+            user.updateProfile(profile).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()) {
+                        Log.d("Perfil", "erro ao recuperar nome de peril");
+                    }
+                }
+            });
+
+            return true;
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
+
+    }
+
+    public static Usuario getDadosUsuarioLogado() {
+
+        FirebaseUser firebaseUser = getUsuarioAtual();
+
+        Usuario usuario = new Usuario();
+
+        usuario.setEmail(firebaseUser.getEmail());
+        usuario.setNome(firebaseUser.getDisplayName());
+
+        if (firebaseUser.getPhotoUrl() == null) {
+            usuario.setFoto("");
+        } else {
+            usuario.setFoto(firebaseUser.getPhotoUrl().toString());
+        }
+
+
+        return usuario;
+
+    }
+
 }

@@ -1,8 +1,13 @@
 package com.aidev.whatsapp.model;
 
 import com.aidev.whatsapp.config.ConfiguracaoFirebase;
+import com.aidev.whatsapp.helper.UsuarioFirebase;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Exclude;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /*
 
@@ -14,8 +19,17 @@ created by Anthoni Ipiranga
     private String nome;
     private String email;
     private String senha;
+    private String foto;
 
     public Usuario() {
+    }
+
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
     }
 
     public String getNome() {
@@ -60,5 +74,27 @@ created by Anthoni Ipiranga
 
         usuario.setValue(this);
 
+    }
+
+    public void atualizar() {
+
+        String identificadorUsuario = UsuarioFirebase.getIdentificadorUsuario();
+        DatabaseReference fire = ConfiguracaoFirebase.getFirebaseDatabase();
+        DatabaseReference usuariosRef = fire.child("usuarios").child(identificadorUsuario);
+
+        usuariosRef.updateChildren(converterParaMap());
+
+    }
+
+    @Exclude
+    public Map<String, Object> converterParaMap() {
+
+        HashMap<String, Object> usuarioMap = new HashMap<>();
+
+        usuarioMap.put("nome", getNome());
+        usuarioMap.put("email", getEmail());
+        usuarioMap.put("foto", getFoto());
+
+        return usuarioMap;
     }
 }
