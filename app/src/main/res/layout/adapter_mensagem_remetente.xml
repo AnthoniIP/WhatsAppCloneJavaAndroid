@@ -6,8 +6,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/bg_balao"
-    android:backgroundTint="@color/bg_remetente"
 
 
     >
@@ -16,7 +14,8 @@
 
     <LinearLayout
 
-
+        android:background="@drawable/bg_balao"
+        android:backgroundTint="@color/bg_remetente"
         android:layout_margin="6dp"
         android:orientation="vertical"
         android:layout_height="wrap_content"
@@ -34,6 +33,8 @@
             android:id="@+id/mensagemTexto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+
+            android:text="TextView"
             android:textSize="18sp" />
 
     </LinearLayout>
