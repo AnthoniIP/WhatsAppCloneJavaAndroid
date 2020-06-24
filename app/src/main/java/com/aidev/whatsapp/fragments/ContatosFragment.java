@@ -1,5 +1,6 @@
 package com.aidev.whatsapp.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,11 +11,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 
 import com.aidev.whatsapp.R;
+import com.aidev.whatsapp.activity.ChatActivity;
 import com.aidev.whatsapp.adapter.ContatosAdapter;
 import com.aidev.whatsapp.config.ConfiguracaoFirebase;
+import com.aidev.whatsapp.helper.RecyclerItemClickListener;
+import com.aidev.whatsapp.helper.UsuarioFirebase;
 import com.aidev.whatsapp.model.Usuario;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,6 +36,7 @@ public class ContatosFragment extends Fragment {
     private ArrayList<Usuario> contatosLista = new ArrayList<>();
     private DatabaseReference usuariosReference;
     private ValueEventListener valueEventListenerContatos;
+    private FirebaseUser usuarioAtual;
 
 
     public ContatosFragment() {
@@ -54,6 +61,8 @@ public class ContatosFragment extends Fragment {
 
         listaContatos = view.findViewById(R.id.recyclerListaContatos);
 
+        usuarioAtual = UsuarioFirebase.getUsuarioAtual();
+
         //configurar adapter
         adapter = new ContatosAdapter(contatosLista, getActivity());
 
@@ -63,6 +72,33 @@ public class ContatosFragment extends Fragment {
         listaContatos.setLayoutManager(layoutManager);
         listaContatos.setHasFixedSize(true);
         listaContatos.setAdapter(adapter);
+
+        //evento do click no RecyclerView
+        listaContatos.addOnItemTouchListener(
+                new RecyclerItemClickListener(
+                        getActivity(),
+                        listaContatos,
+                        new RecyclerItemClickListener.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(View view, int position) {
+
+                                Intent intent = new Intent(getActivity(), ChatActivity.class);
+                                startActivity(intent);
+
+                            }
+
+                            @Override
+                            public void onLongItemClick(View view, int position) {
+
+                            }
+
+                            @Override
+                            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                            }
+                        }
+                )
+        );
 
 
         return view;
@@ -86,8 +122,18 @@ public class ContatosFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 for (DataSnapshot dados : dataSnapshot.getChildren()) {
+
+
                     Usuario usuario = dados.getValue(Usuario.class);
-                    contatosLista.add(usuario);
+
+                    if (usuarioAtual.getEmail() != usuario.getEmail()) {
+
+                        contatosLista.add(usuario);
+
+
+                    }
+
+
                 }
 
                 adapter.notifyDataSetChanged();

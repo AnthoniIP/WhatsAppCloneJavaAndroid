@@ -2,13 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.aidev.whatsapp">
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"></uses-permission>
-    <uses-permission android:name="android.permission.CAMERA"></uses-permission>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <uses-feature
         android:name="android.hardware.camera2"
-        android:required="true"
-        ></uses-feature>
+        android:required="true" />
 
     <application
         android:allowBackup="true"
@@ -18,16 +17,19 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:parentActivityName=".activity.MainActivity"
+            android:name=".activity.ChatActivity"
+            android:label="@string/title_activity_chat"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
             android:name=".activity.LoginActivity"
             android:noHistory="true"
             android:screenOrientation="portrait">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity
             android:name=".activity.CadastroActivity"
@@ -38,10 +40,7 @@
         <activity
             android:name=".activity.ConfigActivity"
             android:parentActivityName=".activity.MainActivity"
-
-            android:screenOrientation="portrait"
-
-            />
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
