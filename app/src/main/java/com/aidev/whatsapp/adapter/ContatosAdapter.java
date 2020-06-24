@@ -3,7 +3,6 @@ package com.aidev.whatsapp.adapter;
 import android.content.Context;
 import android.net.Uri;
 import android.view.LayoutInflater;
-import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -35,7 +34,7 @@ public class ContatosAdapter extends RecyclerView.Adapter<ContatosAdapter.MyView
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View itemLista = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_lista, parent, false);
+        View itemLista = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_contatos, parent, false);
 
         return new MyViewHolder(itemLista);
     }

@@ -63,6 +63,8 @@ public class ContatosFragment extends Fragment {
 
         usuarioAtual = UsuarioFirebase.getUsuarioAtual();
 
+        recuperarContatos();
+
         //configurar adapter
         adapter = new ContatosAdapter(contatosLista, getActivity());
 
@@ -82,7 +84,10 @@ public class ContatosFragment extends Fragment {
                             @Override
                             public void onItemClick(View view, int position) {
 
+                                Usuario usuario = contatosLista.get(position);
+
                                 Intent intent = new Intent(getActivity(), ChatActivity.class);
+                                intent.putExtra("chatContato",usuario);
                                 startActivity(intent);
 
                             }
@@ -107,7 +112,7 @@ public class ContatosFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        recuperarContatos();
+
     }
 
     @Override
@@ -126,7 +131,9 @@ public class ContatosFragment extends Fragment {
 
                     Usuario usuario = dados.getValue(Usuario.class);
 
-                    if (usuarioAtual.getEmail() != usuario.getEmail()) {
+                    String emailAtual = usuarioAtual.getEmail();
+
+                    if (!emailAtual.equals(usuario.getEmail())) {
 
                         contatosLista.add(usuario);
 
