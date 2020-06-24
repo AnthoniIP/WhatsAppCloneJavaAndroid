@@ -6,6 +6,7 @@ public class Mensagem {
     private String mensagem;
     private String imagem;
 
+
     public Mensagem() {
     }
 
