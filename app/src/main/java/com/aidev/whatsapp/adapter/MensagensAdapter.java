@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.aidev.whatsapp.R;
 import com.aidev.whatsapp.helper.UsuarioFirebase;
 import com.aidev.whatsapp.model.Mensagem;
-import com.aidev.whatsapp.model.Usuario;
 import com.bumptech.glide.Glide;
 
 import java.util.List;
@@ -26,11 +25,11 @@ public class MensagensAdapter extends RecyclerView.Adapter<MensagensAdapter.MyVi
 
 
     private Context context;
-    List<Mensagem> mensagemList;
+    List<Mensagem> mensagens;
 
-    public MensagensAdapter(List<Mensagem> mensagemList, Context c) {
+    public MensagensAdapter(List<Mensagem> mensagens, Context c) {
 
-        this.mensagemList = mensagemList;
+        this.mensagens = mensagens;
         this.context = c;
     }
 
@@ -46,7 +45,7 @@ public class MensagensAdapter extends RecyclerView.Adapter<MensagensAdapter.MyVi
 
         } else if (viewType == TIPO_DESTINATARIO) {
 
-            item = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_mensagem_remetente, parent, false);
+            item = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_mensagem_destinatario, parent, false);
 
         }
 
@@ -58,7 +57,7 @@ public class MensagensAdapter extends RecyclerView.Adapter<MensagensAdapter.MyVi
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
-        Mensagem mensage = mensagemList.get(position);
+        Mensagem mensage = mensagens.get(position);
         String msg = mensage.getMensagem();
         String imagem = mensage.getImagem();
 
@@ -81,22 +80,21 @@ public class MensagensAdapter extends RecyclerView.Adapter<MensagensAdapter.MyVi
 
     @Override
     public int getItemCount() {
-        return mensagemList.size();
+        return mensagens.size();
     }
 
     @Override
     public int getItemViewType(int position) {
 
-        Mensagem mensage = mensagemList.get(position);
+        Mensagem mensagem = mensagens.get( position );
+
         String idUsuario = UsuarioFirebase.getIdentificadorUsuario();
 
-        if (idUsuario.equals(mensage.getIdUsuario())) {
-
+        if ( idUsuario.equals( mensagem.getIdUsuario() ) ){
             return TIPO_REMETENTE;
-
         }
-        return TIPO_DESTINATARIO;
 
+        return TIPO_DESTINATARIO;
 
     }
 

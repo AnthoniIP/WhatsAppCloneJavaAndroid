@@ -10,11 +10,10 @@ import com.aidev.whatsapp.helper.UsuarioFirebase;
 import com.aidev.whatsapp.model.Mensagem;
 import com.aidev.whatsapp.model.Usuario;
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import androidx.annotation.NonNull;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -23,7 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 import com.aidev.whatsapp.R;
 import com.google.firebase.database.ChildEventListener;
@@ -117,7 +116,8 @@ public class ChatActivity extends AppCompatActivity {
         recyclerMensagens.setAdapter(adapter);
 
         databaseReference = ConfiguracaoFirebase.getFirebaseDatabase();
-        mensagensRef = databaseReference.child("mensagens")
+        mensagensRef = databaseReference
+                .child("mensagens")
                 .child(IDusuarioRemetente)
                 .child(IDusuarioDestinatario);
 
