@@ -7,6 +7,9 @@ Usado firebaseAuth para autenticação de usuários, firebase database para arma
 
 Projeto parte do curso https://www.udemy.com/course/curso-de-desenvolvimento-android-oreo/ ministrado pelo Jailson Damasceno.
 
+
+![alt text](https://github.com/AnthoniIP/WhatsAppCloneJavaAndroid/blob/master/screenshots/chatsample.gif?raw=true)
+
 ## Tela de login
 
 ![alt text](https://github.com/AnthoniIP/WhatsAppCloneJavaAndroid/blob/master/screenshots/device-2020-06-16-023400.png?raw=true)
