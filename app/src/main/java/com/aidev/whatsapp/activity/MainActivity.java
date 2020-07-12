@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void abrirConfiguracoes() {
 
-        Intent intent = new Intent(this,ConfigActivity.class);
+        Intent intent = new Intent(this, ConfigActivity.class);
         startActivity(intent);
 
     }

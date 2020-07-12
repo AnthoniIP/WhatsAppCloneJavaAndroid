@@ -41,13 +41,13 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ConfigActivity extends AppCompatActivity {
 
+    private static final int SELECAO_CAMERA = 100;
+    private static final int SELECAO_GALERIA = 200;
     private String[] permissoesNecessarias = new String[]{
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.CAMERA
     };
     private ImageView imageButtonCamera, imageButtonGaleria;
-    private static final int SELECAO_CAMERA = 100;
-    private static final int SELECAO_GALERIA = 200;
     private CircleImageView circleImageViewPerfil;
     private StorageReference storageImage;
     private String identificadorUsuario;

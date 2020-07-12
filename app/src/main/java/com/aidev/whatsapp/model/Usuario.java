@@ -4,7 +4,6 @@ import com.aidev.whatsapp.config.ConfiguracaoFirebase;
 import com.aidev.whatsapp.helper.UsuarioFirebase;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Exclude;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.Serializable;
 import java.util.HashMap;

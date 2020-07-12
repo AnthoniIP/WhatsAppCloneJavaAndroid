@@ -22,10 +22,8 @@ public class MensagensAdapter extends RecyclerView.Adapter<MensagensAdapter.MyVi
 
     private static final int TIPO_REMETENTE = 0;
     private static final int TIPO_DESTINATARIO = 1;
-
-
-    private Context context;
     List<Mensagem> mensagens;
+    private Context context;
 
     public MensagensAdapter(List<Mensagem> mensagens, Context c) {
 
@@ -57,22 +55,25 @@ public class MensagensAdapter extends RecyclerView.Adapter<MensagensAdapter.MyVi
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
-        Mensagem mensage = mensagens.get(position);
-        String msg = mensage.getMensagem();
-        String imagem = mensage.getImagem();
+        Mensagem mensagem = mensagens.get(position);
+        String msg = mensagem.getMensagem();
+        String imagem = mensagem.getImagem();
 
         if (imagem != null) {
-
             Uri url = Uri.parse(imagem);
             Glide.with(context).load(url).into(holder.imagem);
+
+            //Esconder o texto
             holder.mensagem.setVisibility(View.GONE);
 
-
         } else {
-
             holder.mensagem.setText(msg);
-            holder.imagem.setVisibility(View.GONE);
 
+            String nome = mensagem.getNome();
+
+
+            //Esconder a imagem
+            holder.imagem.setVisibility(View.GONE);
         }
 
 
@@ -86,11 +87,11 @@ public class MensagensAdapter extends RecyclerView.Adapter<MensagensAdapter.MyVi
     @Override
     public int getItemViewType(int position) {
 
-        Mensagem mensagem = mensagens.get( position );
+        Mensagem mensagem = mensagens.get(position);
 
         String idUsuario = UsuarioFirebase.getIdentificadorUsuario();
 
-        if ( idUsuario.equals( mensagem.getIdUsuario() ) ){
+        if (idUsuario.equals(mensagem.getIdUsuario())) {
             return TIPO_REMETENTE;
         }
 

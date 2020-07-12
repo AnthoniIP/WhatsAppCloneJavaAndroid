@@ -2,16 +2,15 @@ package com.aidev.whatsapp.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
 
 import com.aidev.whatsapp.R;
 import com.aidev.whatsapp.activity.ChatActivity;
@@ -37,7 +36,6 @@ public class ContatosFragment extends Fragment {
     private DatabaseReference usuariosReference;
     private ValueEventListener valueEventListenerContatos;
     private FirebaseUser usuarioAtual;
-
 
 
     public ContatosFragment() {
@@ -88,7 +86,7 @@ public class ContatosFragment extends Fragment {
                                 Usuario usuario = contatosLista.get(position);
 
                                 Intent intent = new Intent(getActivity(), ChatActivity.class);
-                                intent.putExtra("chatContato",usuario);
+                                intent.putExtra("chatContato", usuario);
                                 startActivity(intent);
 
                             }
